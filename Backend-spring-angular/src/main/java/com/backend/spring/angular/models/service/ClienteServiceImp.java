@@ -12,15 +12,32 @@ import com.backend.spring.angular.models.dao.ClienteDao;
 @Service
 public class ClienteServiceImp implements IClienteService {
 
-	
 	@Autowired
 	private ClienteDao clienteDao;
 	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Cliente> findAll() {
-		
 		return (List<Cliente>)clienteDao.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Cliente findById(Long id) {
+		return clienteDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Cliente save(Cliente cliente) {
+		return clienteDao.save(cliente);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		clienteDao.deleteById(id);
+		
 	}
 
 }
