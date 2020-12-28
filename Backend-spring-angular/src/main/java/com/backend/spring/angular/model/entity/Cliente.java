@@ -2,7 +2,6 @@ package com.backend.spring.angular.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,22 +11,32 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 
 @Entity
 @Table(name="clientes")
 public class Cliente implements Serializable{
-
-	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty(message = "No puede estar vacío")
+	@Size(min=4, max=12, message="El tamaño mínimo es 4 y el máximo 12")
+	@Column(nullable=false)
 	private String nombre;
+	
+	@NotEmpty(message = "No puede estar vacío")
 	private String apellido;
+	
+	@Column(nullable=false, unique=true)
 	private String email;
+	
 	@Column(name="create_at")
+	@Email(message = "El formato del correo no es válido")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	
@@ -67,7 +76,7 @@ public class Cliente implements Serializable{
 		this.createAt = createAt;
 	}
 	
-	
+	private static final long serialVersionUID = 1L;
 	
 
 }
